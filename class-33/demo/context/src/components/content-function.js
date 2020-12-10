@@ -1,28 +1,29 @@
-import React, { useContext } from 'react';
-import { SettingsContext } from '../context/site.js';
-import { ThemeContext } from '../context/theme.js';
+import React, {useContext} from 'react'; // React 17: No longer needed
+
+import {ThemeContext} from '../context/theme.js';
+import {SiteContext} from '../context/site.js';
+import ThemeChanger from './theme-changer.js'
+import SiteChanger from './site-changer.js'
+
+// react-if component will help!
+// <When condition={somethingistrue}>REnder these things</When>
 
 function Content(props) {
-  // when you want to use multiple contexts in a function component
-  // simply use multiple useContext() calls to initiate them
-  const siteContext = useContext(SettingsContext);
+
   const themeContext = useContext(ThemeContext);
+  const siteContext = useContext(SiteContext);  // reach up to the "cloud" and gain access to all that was provided
 
   return (
-    <div>
-      <strong>Rendered via Function Component</strong>
-      <h1>{siteContext.title}</h1>
-      <div>
-        <a href={`http://www.twitter.com/${siteContext.twitter}`}>
-          @{siteContext.twitter}
-        </a>
-      </div>
+    <section>
+      <h2>Rendered by a Function</h2>
+      <h3>{siteContext.title}</h3>
+      <h3>Twitter: @{siteContext.twitter}</h3>
+      <h4>Current Mode: {themeContext.mode}</h4>
+      <ThemeChanger />
+      <SiteChanger />
+    </section>
+  )
 
-      <hr />
-
-      <h2>Current Mode: {themeContext.mode}</h2>
-    </div>
-  );
 }
 
 export default Content;

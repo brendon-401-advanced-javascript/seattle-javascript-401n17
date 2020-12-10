@@ -1,18 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import App from './components/app.js';
+import { BrowserRouter } from "react-router-dom";
 
-class Main extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
-  }
-}
+import App from "./App";
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(<Main />, rootElement);
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
+  rootElement
+);

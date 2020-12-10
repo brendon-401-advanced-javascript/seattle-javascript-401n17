@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export const SettingsContext = React.createContext();
+export const SiteContext = React.createContext();
 
-function SettingsProvider(props) {
+class SiteProvider extends React.Component {
 
-  const [title, setTitle] = useState('Daily Dose of Code');
-  const [twitter, setTwitter] = useState('DailyDoseOfCode');
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: 'My Website',
+      twitter: 'dailydoseofcode',
+      numberPerPage: 3,
+      showCompleted: false,
+      changeTitleTo: this.changeTitle,
+      changeTwitterTo: this.changeTwitter,
+    }
+  }
 
-  const state = {
-    title,
-    twitter,
-    changeTitleTo: setTitle,
-    changeTwitterTo: setTwitter
+  changeTitle = (title) => {
+    this.setState({title})
   };
 
-  return (
-    <SettingsContext.Provider value={state}>
-      {props.children}
-    </SettingsContext.Provider>
-  );
+  changeTwitter = (twitter) => {
+    this.setState({twitter})
+  };
+
+  render() {
+    // .Provider makes the object in "value" available to any child component in the whole tree
+    // Effectively, this "is" the cloud
+    return (
+      <SiteContext.Provider value={this.state}>
+        {this.props.children}
+      </SiteContext.Provider>
+    )
+  }
 }
 
-export default SettingsProvider;
+export default SiteProvider;

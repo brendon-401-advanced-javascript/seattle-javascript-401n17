@@ -1,25 +1,34 @@
-import React from 'react';
+// Theme Context -- Global State and Function "The Cloud of data"
+
+import React, {useEffect, useState} from 'react';
 
 export const ThemeContext = React.createContext();
+// USAGE: import {ThemeContext} from 'this-file';
 
-class Theme extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mode: 'dark',
-      toggleMode: this.toggleMode,
-    };
-  }
+function Theme(props) {
 
-  toggleMode = () => this.setState({ mode: this.state.mode === 'dark' ? 'light' : 'dark' });
+  const [mode, setMode] = useState('');
 
-  render() {
-    return (
-      <ThemeContext.Provider value={this.state}>
-        {this.props.children}
-      </ThemeContext.Provider>
-    );
-  }
+  const toggleMode = () => setMode( mode === "dark" ? "light" : "dark" );
+
+  useEffect( () => {
+    setMode(props.default);
+  }, [props.default]);
+
+  /*
+   Alternative to the {{obj}} below
+   const sharedStuff = {
+     mode: mode,
+     toggleMode: toggleMode
+   }
+    <ThemeContext.Provider value={sharedStuff}>
+  */
+  return (
+    <ThemeContext.Provider value={ {mode,toggleMode} }>
+      {props.children}
+    </ThemeContext.Provider>
+  )
 }
 
 export default Theme;
+// USAGE: import Potato from 'this-file'
